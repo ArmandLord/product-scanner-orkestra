@@ -1,23 +1,17 @@
-<script setup>
-import HelloWorld from "./components/HelloWorld.vue";
-</script>
-
 <template>
-  <h1>hola mundo</h1>
-  <HelloWorld msg="Vite + Vue" />
+  <Header msg="Hello Vue 3 + Vite" />
+  <div class="container"></div>
 </template>
 
-<style scoped>
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
-}
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
-}
-.logo.vue:hover {
-  filter: drop-shadow(0 0 2em #42b883aa);
+<script setup>
+import Header from "./components/Header.vue";
+</script>
+
+<style scoped lang="scss">
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 15px;
+  background: red;
 }
 </style>
