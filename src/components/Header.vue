@@ -41,7 +41,7 @@ export default {
   padding: 0;
   background-image: url("../assets/images/background-header.svg");
   height: 60px;
-  position: fixed;
+  position: absolute;
   top: 0;
   left: 0;
   right: 0;
