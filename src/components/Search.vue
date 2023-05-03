@@ -2,7 +2,7 @@
   <div class="container-search">
     <div class="container-input-search">
       <div class="container-input">
-        <input type="text" placeholder="Buscar producto" />
+        <input type="text" placeholder="Buscar producto" v-model="search" />
         <button @click="prueba" class="button-input-scanner">
           <img src="../assets/images/scanner.svg" alt="scanner" />
         </button>
@@ -12,35 +12,37 @@
       </div>
     </div>
 
-    <h1>Search</h1>
-    <h1>Search</h1>
-    <h1>Search</h1>
-    <h1>Search</h1>
-    <h1>Search</h1>
-    <h1>Search</h1>
-    <h1>Search</h1>
-    <h1>Search</h1>
-    <h1>Search</h1>
-    <h1>Search</h1>
-    <h1>Search</h1>
-    <h1>Search</h1>
-    <h1>Search</h1>
-    <h1>Search</h1>
-    <h1>Search</h1>
-    <h1>Search</h1>
-    <h1>Search</h1>
-    <h1>Search</h1>
+    <h1>{{ search }}</h1>
+    <div v-if="products.length > 0">
+      <div v-for="product in products.slice(0, 10)" :key="product.brand_id">
+        <p>{{ product.product_name }}</p>
+      </div>
+    </div>
   </div>
 </template>
 
 <script>
+import { onMounted, ref } from "vue";
+import orkestraApi from "../api/orkestraApi";
 export default {
   name: "Search",
   setup() {
     const prueba = () => {
       console.log("prueba");
     };
-    return { prueba };
+    const search = ref("");
+    let products = ref([]);
+
+    onMounted(async () => {
+      // "/smart-cart/products?with_selects=0&page=1&limit=50&search=17378260&with_products=1";
+      const URL = `/smart-cart/products?with_selects=0&page=1&limit=50`;
+
+      const { data } = await orkestraApi.get(URL);
+      //   console.log(data.products.data);
+      products.value = data.products.data;
+    });
+
+    return { prueba, search, products };
   },
 };
 </script>
