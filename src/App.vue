@@ -1,17 +1,20 @@
 <template>
   <Header msg="Hello Vue 3 + Vite" />
-  <div class="container"></div>
+  <div class="container">
+    <Search />
+  </div>
 </template>
 
 <script setup>
 import Header from "./components/Header.vue";
+import Search from "./components/Search.vue";
 </script>
 
 <style scoped lang="scss">
 .container {
   max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 15px;
-  background: red;
+  margin: 0;
+  padding: 0;
+  background: #e3e9ee;
 }
 </style>
