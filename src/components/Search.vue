@@ -35,7 +35,7 @@
     </div>
 
     <div v-if="products.length > 0">
-      <div v-for="product in products.slice(0, 10)" :key="product.brand_id">
+      <div v-for="product in products" :key="product.brand_id">
         <ProductCard :product="product" />
       </div>
     </div>
@@ -47,7 +47,7 @@
 </template>
 
 <script>
-import { onMounted, ref } from "vue";
+import { onMounted, onBeforeUnmount, ref } from "vue";
 import orkestraApi from "../api/orkestraApi";
 import ProductCard from "./ProductCard.vue";
 import { StreamBarcodeReader } from "vue-barcode-reader";
@@ -64,9 +64,16 @@ export default {
     let isScanner = ref(false);
 
     onMounted(async () => {
-      const URL = `/smart-cart/products?with_selects=0&page=1&limit=50`;
+      const URL = `/smart-cart/products?with_selects=0&page=1&limit=10`;
       const { data } = await orkestraApi.get(URL);
+      console.log(data.products.data);
       products.value = data.products.data;
+
+      window.addEventListener("scroll", handleScroll);
+    });
+
+    onBeforeUnmount(() => {
+      window.removeEventListener("scroll", handleScroll);
     });
 
     const onDecode = (result) => {
@@ -86,6 +93,22 @@ export default {
 
     const clearedSearch = () => {
       search.value = "";
+    };
+
+    const loadMoreProducts = async () => {
+      const URL = `/smart-cart/products?with_selects=0&page=1&limit=50&search=${search.value}&with_products=1`;
+      const { data } = await orkestraApi.get(URL);
+      products.value = data.products.data;
+    };
+
+    const handleScroll = () => {
+      const bottomOfWindow =
+        document.documentElement.scrollTop + window.innerHeight ===
+        document.documentElement.offsetHeight;
+
+      if (bottomOfWindow) {
+        loadMoreProducts();
+      }
     };
 
     return {
