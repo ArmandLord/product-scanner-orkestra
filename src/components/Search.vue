@@ -66,7 +66,6 @@ export default {
     onMounted(async () => {
       const URL = `/smart-cart/products?with_selects=0&page=1&limit=10`;
       const { data } = await orkestraApi.get(URL);
-      console.log(data.products.data);
       products.value = data.products.data;
 
       window.addEventListener("scroll", handleScroll);
