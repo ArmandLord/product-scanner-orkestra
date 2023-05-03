@@ -2,9 +2,21 @@
   <div class="container-search">
     <div class="container-input-search">
       <div class="container-input">
-        <input type="text" placeholder="Buscar producto" v-model="search" />
-        <button @click="prueba" class="button-input-scanner">
+        <input
+          type="text"
+          placeholder="Buscar producto"
+          v-model="search"
+          @input="searchProducts"
+        />
+        <button
+          v-if="search.length === 0"
+          @click="prueba"
+          class="button-input-scanner"
+        >
           <img src="../assets/images/scanner.svg" alt="scanner" />
+        </button>
+        <button v-else @click="clearedSearch" class="button-input-scanner">
+          <img src="../assets/images/cancel.svg" alt="scanner" />
         </button>
       </div>
       <div class="container-filters">
@@ -12,12 +24,14 @@
       </div>
     </div>
 
-    <h1>{{ search }}</h1>
     <div v-if="products.length > 0">
       <div v-for="product in products.slice(0, 10)" :key="product.brand_id">
-        <p>{{ product.product_name }}</p>
         <ProductCard :product="product" />
       </div>
+    </div>
+    <div v-else class="no-products">
+      <img width="30" src="../assets/images/no-search.svg" alt="no-products" />
+      <h3>No existen resultados para está búsqueda</h3>
     </div>
   </div>
 </template>
@@ -39,15 +53,24 @@ export default {
     let products = ref([]);
 
     onMounted(async () => {
-      // "/smart-cart/products?with_selects=0&page=1&limit=50&search=17378260&with_products=1";
       const URL = `/smart-cart/products?with_selects=0&page=1&limit=50`;
-
       const { data } = await orkestraApi.get(URL);
-      //   console.log(data.products.data);
+      console.log(data.products.data);
       products.value = data.products.data;
     });
 
-    return { prueba, search, products };
+    const searchProducts = async () => {
+      const URL = `/smart-cart/products?with_selects=0&page=1&limit=50&search=${search.value}&with_products=1`;
+      const { data } = await orkestraApi.get(URL);
+      console.log(data.products.data);
+      products.value = data.products.data;
+    };
+
+    const clearedSearch = () => {
+      search.value = "";
+    };
+
+    return { search, products, prueba, searchProducts, clearedSearch };
   },
 };
 </script>
@@ -107,6 +130,7 @@ export default {
     font-size: 1rem;
     font-weight: 500;
     color: #95a5a6;
+    outline: none;
   }
 
   input::placeholder {
@@ -124,6 +148,22 @@ export default {
     border: none;
     background: transparent;
     cursor: pointer;
+  }
+}
+
+.no-products {
+  height: calc(100vh - 250px);
+  width: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  h3 {
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: red;
+    text-align: center;
   }
 }
 </style>
