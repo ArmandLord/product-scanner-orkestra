@@ -1,5 +1,15 @@
 <template>
   <div class="container-search">
+    <div v-if="isScanner" class="container-scanner">
+      <div class="return">
+        <p @click="scanner">
+          <img src="../assets/images/arrow-left.svg" alt="scanner" /> Regresar
+        </p>
+        <b> Escanea el código </b>
+      </div>
+
+      <StreamBarcodeReader @decode="onDecode" @loaded="onLoaded" />
+    </div>
     <div class="container-input-search">
       <div class="container-input">
         <input
@@ -10,7 +20,7 @@
         />
         <button
           v-if="search.length === 0"
-          @click="prueba"
+          @click="scanner"
           class="button-input-scanner"
         >
           <img src="../assets/images/scanner.svg" alt="scanner" />
@@ -40,29 +50,37 @@
 import { onMounted, ref } from "vue";
 import orkestraApi from "../api/orkestraApi";
 import ProductCard from "./ProductCard.vue";
+import { StreamBarcodeReader } from "vue-barcode-reader";
+
 export default {
   name: "Search",
   components: {
     ProductCard,
+    StreamBarcodeReader,
   },
   setup() {
-    const prueba = () => {
-      console.log("prueba");
-    };
     const search = ref("");
     let products = ref([]);
+    let isScanner = ref(false);
 
     onMounted(async () => {
       const URL = `/smart-cart/products?with_selects=0&page=1&limit=50`;
       const { data } = await orkestraApi.get(URL);
-      console.log(data.products.data);
       products.value = data.products.data;
     });
+
+    const onDecode = (result) => {
+      search.value = result;
+      isScanner.value = !isScanner.value;
+    };
+
+    const scanner = () => {
+      isScanner.value = !isScanner.value;
+    };
 
     const searchProducts = async () => {
       const URL = `/smart-cart/products?with_selects=0&page=1&limit=50&search=${search.value}&with_products=1`;
       const { data } = await orkestraApi.get(URL);
-      console.log(data.products.data);
       products.value = data.products.data;
     };
 
@@ -70,12 +88,57 @@ export default {
       search.value = "";
     };
 
-    return { search, products, prueba, searchProducts, clearedSearch };
+    return {
+      search,
+      products,
+      isScanner,
+      scanner,
+      searchProducts,
+      clearedSearch,
+      onDecode,
+    };
   },
 };
 </script>
 
 <style lang="scss" scoped>
+.container-scanner {
+  background: #fff;
+  height: calc(100vh - 60px);
+  width: 100%;
+  display: flex;
+  align-items: start;
+  justify-content: start;
+  flex-direction: column;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  z-index: 1000;
+
+  .return {
+    width: 100%;
+    display: flex;
+    align-items: start;
+    justify-content: start;
+    flex-direction: column;
+    padding: 1rem;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    p {
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: #2980b9;
+      display: flex;
+      align-items: center;
+      justify-content: start;
+
+      img {
+        width: 20px;
+      }
+    }
+  }
+}
 .container-search {
   margin-top: 60px;
   display: flex;
