@@ -16,6 +16,7 @@
     <div v-if="products.length > 0">
       <div v-for="product in products.slice(0, 10)" :key="product.brand_id">
         <p>{{ product.product_name }}</p>
+        <ProductCard :product="product" />
       </div>
     </div>
   </div>
@@ -24,8 +25,12 @@
 <script>
 import { onMounted, ref } from "vue";
 import orkestraApi from "../api/orkestraApi";
+import ProductCard from "./ProductCard.vue";
 export default {
   name: "Search",
+  components: {
+    ProductCard,
+  },
   setup() {
     const prueba = () => {
       console.log("prueba");
