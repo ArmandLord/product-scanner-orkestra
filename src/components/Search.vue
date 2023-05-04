@@ -64,9 +64,7 @@ export default {
     let isScanner = ref(false);
 
     onMounted(async () => {
-      const URL = `/smart-cart/products?with_selects=0&page=1&limit=10`;
-      const { data } = await orkestraApi.get(URL);
-      products.value = data.products.data;
+      await getProducts();
 
       window.addEventListener("scroll", handleScroll);
     });
@@ -74,6 +72,12 @@ export default {
     onBeforeUnmount(() => {
       window.removeEventListener("scroll", handleScroll);
     });
+
+    const getProducts = async () => {
+      const URL = `/smart-cart/products?with_selects=0&page=1&limit=10`;
+      const { data } = await orkestraApi.get(URL);
+      products.value = data.products.data;
+    };
 
     const onDecode = (result) => {
       search.value = result;
@@ -86,8 +90,16 @@ export default {
     };
 
     const searchProducts = async () => {
+      if (search.value.length === 0) {
+        console.log("entro");
+        // setear la data de nuevo
+        products.value = [];
+        await getProducts();
+      }
+
       const URL = `/smart-cart/products?with_selects=0&page=1&limit=50&search=${search.value}&with_products=1`;
       const { data } = await orkestraApi.get(URL);
+      products.value = [];
       products.value = data.products.data;
     };
 
@@ -96,7 +108,12 @@ export default {
     };
 
     const loadMoreProducts = async () => {
-      const URL = `/smart-cart/products?with_selects=0&page=1&limit=50&search=${search.value}&with_products=1`;
+      // si search.value tiene algo products.value = []
+      if (search.value.length === 0) {
+        products.value = [];
+      }
+
+      const URL = `/smart-cart/products?with_selects=0&page=1&limit=50`;
       const { data } = await orkestraApi.get(URL);
       products.value = data.products.data;
     };
