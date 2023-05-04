@@ -1,7 +1,38 @@
-# Vue 3 + Vite
+# Prueba Técnica Orkestra - Scanner de productos
 
-This template should help get you started developing with Vue 3 in Vite. The template uses Vue 3 `<script setup>` SFCs, check out the [script setup docs](https://v3.vuejs.org/api/sfc-script-setup.html#sfc-script-setup) to learn more.
+## Descripción
 
-## Recommended IDE Setup
+El proyecto consiste en un listado de productos que se obtienen de una API y se muestran en una lista.
+Puedes buscar productos y escanear códigos de barras para agregarlos a la lista.
 
-- [VS Code](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+## Instalación
+
+Para instalar el proyecto, debes clonar el repositorio y ejecutar el siguiente comando en la carpeta raíz del proyecto:
+
+```bash
+nvm use
+```
+
+Para trabajar con la versión de node correcta.
+
+Luego, instalar las dependencias con el siguiente comando:
+
+```bash
+npm install
+```
+
+## Ejecución
+
+Para ejecutar el proyecto, debes ejecutar el siguiente comando en la carpeta raíz del proyecto:
+
+```bash
+npm run dev
+```
+
+## Variables de entorno
+
+Las variables de entorno de ejemplo se encuentran en el archivo `.env.template`. Para ejecutar el proyecto, debes crear un archivo `.env` en la carpeta raíz del proyecto con las variables de entorno necesarias.
+
+**Nota:** El proyecto no funcionará sin las variables de entorno.
+
+El proyecto esta desplegado en la siguiente URL: [orkestra-challenge](https://product-scanner-orkestra.vercel.app/)
