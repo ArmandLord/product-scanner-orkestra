@@ -91,13 +91,10 @@ export default {
 
     const searchProducts = async () => {
       if (search.value.length === 0) {
-        console.log("entro");
-        // setear la data de nuevo
         products.value = [];
-        await getProducts();
       }
 
-      const URL = `/smart-cart/products?with_selects=0&page=1&limit=50&search=${search.value}&with_products=1`;
+      const URL = `/smart-cart/products?with_selects=0&page=1&limit=10&search=${search.value}&with_products=1`;
       const { data } = await orkestraApi.get(URL);
       products.value = [];
       products.value = data.products.data;
@@ -105,14 +102,11 @@ export default {
 
     const clearedSearch = () => {
       search.value = "";
+      products.value = [];
+      getProducts();
     };
 
     const loadMoreProducts = async () => {
-      // si search.value tiene algo products.value = []
-      if (search.value.length === 0) {
-        products.value = [];
-      }
-
       const URL = `/smart-cart/products?with_selects=0&page=1&limit=50`;
       const { data } = await orkestraApi.get(URL);
       products.value = data.products.data;
@@ -123,7 +117,8 @@ export default {
         document.documentElement.scrollTop + window.innerHeight ===
         document.documentElement.offsetHeight;
 
-      if (bottomOfWindow) {
+      if (bottomOfWindow && search.value.length === 0) {
+        search.value = "";
         loadMoreProducts();
       }
     };
