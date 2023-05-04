@@ -78,6 +78,7 @@ export default {
     const onDecode = (result) => {
       search.value = result;
       isScanner.value = !isScanner.value;
+      searchProducts();
     };
 
     const scanner = () => {
@@ -126,7 +127,7 @@ export default {
 <style lang="scss" scoped>
 .container-scanner {
   background: #fff;
-  height: calc(100vh - 60px);
+  height: calc(100vh - 80px);
   width: 100%;
   display: flex;
   align-items: start;
