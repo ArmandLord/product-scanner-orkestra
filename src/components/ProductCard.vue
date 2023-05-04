@@ -19,7 +19,6 @@
       <p>${{ product.price }}</p>
       <p>{{ product.product_description }}</p>
       <p>{{ product.color_name }}</p>
-      <!-- si el product.price_with_discount > 0 muestralo -->
       <p v-if="product.price_with_discount > 0">
         <b style="color: red">${{ product.price_with_discount }} descuento</b>
       </p>
@@ -36,12 +35,6 @@ export default {
       required: true,
     },
   },
-  // setup() {
-  //     const prueba = () => {
-  //     console.log("prueba");
-  //     };
-  //     return { prueba };
-  // },
 };
 </script>
 
@@ -55,7 +48,6 @@ export default {
   margin-bottom: 8px;
 
   .container-image {
-    // background: green;
     width: 25%;
     display: flex;
     align-items: center;
@@ -67,7 +59,6 @@ export default {
   }
 
   .container-info {
-    // background: blue;
     padding: 0 5px;
     width: 75%;
     display: flex;

@@ -1,5 +1,5 @@
 <template>
-  <Header msg="Hello Vue 3 + Vite" />
+  <Header />
   <div class="container">
     <Search />
   </div>
