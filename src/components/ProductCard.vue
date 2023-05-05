@@ -78,4 +78,10 @@ export default {
     }
   }
 }
+
+@media screen and (min-width: 500px) {
+  .container-card-product {
+    width: 95vw !important;
+  }
+}
 </style>

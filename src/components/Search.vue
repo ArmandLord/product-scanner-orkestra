@@ -190,7 +190,7 @@ export default {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  width: 100%;
+  width: 90%;
   padding: 0 0.5rem;
 
   .container-input {
@@ -262,6 +262,25 @@ export default {
     font-weight: 500;
     color: red;
     text-align: center;
+  }
+}
+
+@media screen and (min-width: 500px) {
+  .container-input {
+    width: 50%;
+
+    input {
+      width: 50%;
+      background-position: 2% 50%;
+    }
+
+    .button-input-scanner {
+      right: 25%;
+      top: 23%;
+    }
+  }
+  .container-filters {
+    width: 50% !important;
   }
 }
 </style>

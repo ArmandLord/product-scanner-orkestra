@@ -12,7 +12,7 @@ import Search from "./components/Search.vue";
 
 <style scoped lang="scss">
 .container {
-  max-width: 1200px;
+  max-width: 100vw;
   margin: 0;
   padding: 0;
   background: #e3e9ee;

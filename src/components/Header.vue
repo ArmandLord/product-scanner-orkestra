@@ -81,4 +81,18 @@ nav {
     }
   }
 }
+
+@media screen and (min-width: 500px) {
+  .container-logo {
+    width: 5% !important;
+  }
+
+  .container-navigation {
+    width: 95% !important;
+  }
+
+  .container-navigation-list {
+    width: 15% !important;
+  }
+}
 </style>
