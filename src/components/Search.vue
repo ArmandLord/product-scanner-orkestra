@@ -9,7 +9,7 @@
 
     <StreamBarcodeReader @decode="onDecode" @loaded="onLoaded" />
   </div>
-  <div class="container-search">
+  <div v-else class="container-search">
     <div class="container-input-search">
       <div class="container-input">
         <input
