@@ -1,15 +1,15 @@
 <template>
-  <div class="container-search">
-    <div v-if="isScanner" class="container-scanner">
-      <div class="return">
-        <p @click="scanner">
-          <img src="../assets/images/arrow-left.svg" alt="scanner" /> Regresar
-        </p>
-        <b> Escanea el código </b>
-      </div>
-
-      <StreamBarcodeReader @decode="onDecode" @loaded="onLoaded" />
+  <div v-if="isScanner" class="container-scanner">
+    <div class="return">
+      <p @click="scanner">
+        <img src="../assets/images/arrow-left.svg" alt="scanner" /> Regresar
+      </p>
+      <b> Escanea el código </b>
     </div>
+
+    <StreamBarcodeReader @decode="onDecode" @loaded="onLoaded" />
+  </div>
+  <div class="container-search">
     <div class="container-input-search">
       <div class="container-input">
         <input
@@ -138,28 +138,36 @@ export default {
 
 <style lang="scss" scoped>
 .container-scanner {
-  background: #fff;
-  height: calc(100vh - 80px);
-  width: 100%;
-  display: flex;
+  background: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0) 0%,
+    rgb(255, 255, 255) 50%,
+    rgb(255, 255, 255) 100%
+  );
+
   align-items: start;
-  justify-content: start;
-  flex-direction: column;
-  position: absolute;
   bottom: 0;
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  justify-content: start;
   left: 0;
+  position: absolute;
+  width: 100vw;
   z-index: 1000;
 
   .return {
-    width: 100%;
-    display: flex;
     align-items: start;
-    justify-content: start;
+    background: #fff;
+    cursor: pointer;
+    display: flex;
     flex-direction: column;
-    padding: 1rem;
     font-size: 1rem;
     font-weight: 500;
-    cursor: pointer;
+    justify-content: start;
+    padding: 1rem;
+    margin-top: 60px;
+    width: 90%;
     p {
       font-size: 0.9rem;
       font-weight: 600;
@@ -266,6 +274,9 @@ export default {
 }
 
 @media screen and (min-width: 500px) {
+  .container-input-search {
+    width: 98%;
+  }
   .container-input {
     width: 50%;
 
@@ -281,6 +292,15 @@ export default {
   }
   .container-filters {
     width: 50% !important;
+  }
+
+  .container-scanner {
+    width: 100vw !important;
+    height: calc(100vh - 60px) !important;
+    background: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 }
 </style>
